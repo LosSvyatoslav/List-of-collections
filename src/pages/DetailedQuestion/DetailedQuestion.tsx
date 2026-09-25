@@ -8,7 +8,7 @@ import { DetailedQuestionContext } from "../../context/DetailedQuestionContext/D
 import QuestionsHeader from "./components/QuestionsHeader/QuestionsHeader";
 import QuestionsShortAnswer from "./components/QuestionsShortAnswer/QuestionsShortAnswer";
 import QuestionsSideBar from "./components/QuestionsSideBar/QuestionsSideBar";
-import QuestionsLongAnswer from "./components/QuestionsLongAnswer copy/QuestionsLongAnswer";
+import QuestionsLongAnswer from "./components/QuestionsLongAnswer/QuestionsLongAnswer";
 
 const DetailedQuestion = () => {
   const { getQuestionData, questionData, error } = useContext(
@@ -19,8 +19,8 @@ const DetailedQuestion = () => {
   const navigate = useNavigate();
 
   const handleBackBurronClick = () => {
-    navigate(-1)
-  }
+    navigate(-1);
+  };
 
   useEffect(() => {
     if (questionId) {
@@ -47,7 +47,7 @@ const DetailedQuestion = () => {
     createdBy,
   } = questionData;
 
-  const { username } = createdBy;
+  const username = createdBy?.username;
 
   return (
     <section>
@@ -61,8 +61,8 @@ const DetailedQuestion = () => {
           <div className={styles.leftSide}>
             <QuestionsHeader title={title} description={description} />
             <DetailedQuestionNavigation />
-            <QuestionsShortAnswer answer={shortAnswer}/>
-            <QuestionsLongAnswer answer={longAnswer} questionId={questionId}/>
+            <QuestionsShortAnswer answer={shortAnswer} />
+            <QuestionsLongAnswer answer={longAnswer} questionId={questionId} />
           </div>
 
           <QuestionsSideBar
