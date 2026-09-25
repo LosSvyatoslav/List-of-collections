@@ -1,0 +1,141 @@
+.item{
+   box-shadow: var(--shadow);
+   background-color: var(--white-color); 
+   border-radius: var(--border-radius-8);
+   border: none;
+   font-family: "Manrope", sans-serif; 
+        button {
+            background: none;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+        }
+}
+
+.question{
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 16px 24px; 
+}
+
+.questionTitle{
+  display: flex;
+  align-items: flex-start;
+  gap: 8px; 
+}
+
+.mark{
+    width: 8px;
+    height: 8px;
+    margin-top: 8px;
+    flex-shrink: 0;
+}
+
+.questionText{
+    font-size: var(--font-size-20);
+    text-align: left;
+}
+
+.answer{
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease;
+    padding: 0 24px;
+    background-color: var(--white-color); 
+}
+
+.answerOpen{
+    grid-template-rows: 1fr;
+    padding: 0 24px 24px;
+    border-radius: var(--border-radius-8);
+}
+
+.answerContent {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    overflow: hidden;
+}
+
+.grades{
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.grade{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 10px;
+    background-color: rgba(248, 248, 248, 1);
+    border-radius: var(--border-radius-8);
+}
+
+.gradeName{
+    font-weight: var(--font-weight-600);
+    font-size: var(--font-size-14);
+    color: var(--black-color-800);
+}
+
+.gradeNumber{
+    padding: 2px 4px;
+    font-weight: var(--font-weight-600);
+    font-size: var(--font-size-14);
+    color: var(--white-color);
+    background: var(--purple-color);
+    border-radius: 4px;
+}
+
+.answersImage{
+    border-radius: var(--border-radius-8);
+}
+
+.shortAnswer{
+  line-height: 140%;
+  color: rgba(71, 71, 71, 1);
+  text-align: left;
+}
+
+.rotate {
+    transform: rotate(180deg);
+}
+.arrow{
+    transition: 0.3s ease;
+}
+.showMore{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+
+    span {
+        font-size: var(--font-size-16);
+        font-weight: var(--font-weight-600);
+        line-height: 110%;
+        color: var(--purple-color)
+    }
+    span:hover{
+        text-decoration: underline;
+    }
+}
+
+  @media (max-width: 500px) {
+    .questionText{
+        font-size: var(--font-size-16);
+        line-height: 130%;
+    }
+    .question{
+        padding: 10px;
+    }
+    .grades{
+    gap: 16px;
+    margin-top: 6px;
+}   .gradeName{
+    font-size: var(--border-radius-12);
+}
+    .answerContent {
+        gap: 16px;
+    }
+ }

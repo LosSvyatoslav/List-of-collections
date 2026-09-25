@@ -1,0 +1,149 @@
+.header{
+    display: flex;
+    align-items: center;
+    height: 64px;
+    border-bottom: 1px solid rgba(232, 232, 232, 1);
+}
+
+.header__container{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.header__left-side{
+    display: flex;
+    align-items: center;
+    
+}
+.header__logo{
+    display: flex;
+    gap: 8px; 
+    width: 172px;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+.header__list{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.header__link, .mobile__link{
+    color: var(--black-color-900);
+    line-height: 140%;
+}
+
+.header__buttons{
+    display: flex;
+    gap: 26px;
+    max-width: 235px;
+    width: 100%;
+}
+
+.button{
+    font-family: "Manrope";
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.button--enter{
+    color: var(--purple-color);
+    font-size: var(--font-size-16);
+}
+
+.button--registration{
+    background-color: var(--purple-color);
+    color: var(--white-color);
+    border-radius: var(--border-radius-12);
+    font-size: 18px;
+    width: 100%;
+    max-width: 170px;
+    min-width: 125px;
+    height: 48px;
+}
+
+.mobile {
+    display: none;
+}
+
+.mobile__icon {
+    transition: 0.3s ease;
+}
+
+.mobile__navigation-toggle{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.mobile__title{
+    font-size: var(--font-size-16);
+    line-height: 140%;
+    font-weight: var(--font-weight-500);
+    color: var(--black-color-900);  
+}
+
+
+.mobile__list, .burger__buttons{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    background-color: var(--white-color);
+    z-index: 123;
+    width: 250px;
+    box-shadow: 0px 10px 10px 0px rgba(106, 99, 118, 0.1);
+    border-bottom-left-radius: var(--border-radius-24);
+    border-bottom-right-radius: var(--border-radius-24);
+}
+
+.burger{
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+}
+
+.burger__buttons{
+    align-items: flex-end;
+    width: 150px;
+    right: 0;
+}
+
+.burger__button--enter, .burger__button--registration{
+    font-size: var(--font-size-16);
+}
+
+
+ @media (max-width: 879px) {
+    .mobile, .burger{
+    display: block;
+}
+
+    .header__buttons, .header__list {
+    display: none;
+    }
+ }
+
+
+    @media (max-width: 360px) {
+    .logo__title {
+    display: none;
+        }
+    .header__logo{
+    display: flex;
+    gap: 8px; 
+    width: 100%;
+}
+.header__left-side{
+    gap: 20px;
+    
+}
+    }

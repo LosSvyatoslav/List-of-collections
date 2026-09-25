@@ -1,0 +1,40 @@
+.question{
+    display: flex;
+    gap: 20px;
+}
+
+.leftSide{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 804px;
+}
+
+.backButton{
+  background: none;  
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+    span{
+        color: var(--purple-color);
+        font-size: var(--font-size-16);
+        line-height: 120%;
+        font-weight: var(--font-weight-500);
+    }
+    img{
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media (max-width: 879px) {
+    .question {
+        flex-direction: column;
+    }
+    .leftSide {
+        max-width: 100%;
+    }
+}

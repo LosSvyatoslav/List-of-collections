@@ -1,0 +1,32 @@
+.button, .page, .active {
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding-inline: 0;
+}
+
+.pagination{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 40px;
+}
+
+.page {
+    font-family: "Manrope", sans-serif;
+    font-size: var(--font-size-14);
+    font-weight: var(--font-weight-500);
+    line-height: 120%;
+    color: rgba(71, 71, 71, 1);
+
+}
+
+.active {
+    padding: 2px 6px;
+    background-color: var(--purple-color);
+    color: var(--white-color);
+    border-radius: 2px;
+    font-weight: var(--font-weight-600);
+    line-height: 150%;
+}

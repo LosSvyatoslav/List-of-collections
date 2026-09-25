@@ -1,0 +1,17 @@
+.main {
+    background-color: rgba(244, 244, 244, 1);
+    padding: 40px 0 140px;
+    position: relative;
+}
+
+ @media (max-width: 879px) {
+    .main {
+      padding: 24px 20px 90px;  
+    }
+ }
+
+  @media (max-width: 548px) {
+    .main {
+      padding: 20px 0 45px;  
+    }
+ }

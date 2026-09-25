@@ -1,0 +1,41 @@
+.collection{
+    display: flex;
+    gap: 20px;
+}
+
+
+
+.leftSide{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 804px;
+    width: 100%;
+}
+
+.rightSide{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+ @media (max-width: 879px) {
+    .mobileInfo {
+        display: block;
+    }
+    .leftSide {
+        max-width: 100%;
+    }
+    .collection {
+        flex-direction: column;
+    }
+ }
+
+  @media (max-width: 500px) {
+    .leftSide {
+        max-width: 100%;
+    }
+ }
+
+ 

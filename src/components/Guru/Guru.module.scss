@@ -1,0 +1,73 @@
+.guru{
+    padding: 24px;
+    background-color: var(--white-color);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border: 1px solid rgba(85, 51, 255, 1);
+
+    
+    ul{
+        display: flex;
+        gap: 12px;
+        a {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+    }
+}
+
+.info{
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.name, .description {
+    line-height: 130%;
+    color: var(--black-color-800)
+}
+
+.role {
+    line-height: 130%;
+    color: rgba(117, 117, 117, 1);
+;
+}
+
+.avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 1px solid rgba(85, 51, 255, 1);
+    overflow: hidden;
+    img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 8%;
+        
+    }
+}
+.wrapper {
+    position: relative;
+}
+.checked{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+
+}
+
+ @media (max-width: 879px) {
+    .guru {
+        padding: 20px;
+    }
+ }

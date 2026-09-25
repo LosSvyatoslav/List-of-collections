@@ -1,0 +1,33 @@
+.section{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: var(--shadow);
+    background-color: white;
+    border-radius: var(--border-radius-24);
+    padding: 24px;
+}
+
+.answerTitle {
+    font-size: var(--font-size-20);
+    color: var(--black-color-800);
+}
+
+.answerText {
+   line-height: 130%; 
+   color: var(--black-color-800);
+   
+}
+
+ @media (max-width: 879px) {
+
+    .section{
+        padding: 20px 16px;
+    }
+}
+
+ @media (max-width: 500px){
+    .section{
+        padding: 20px 10px;
+    }
+ }

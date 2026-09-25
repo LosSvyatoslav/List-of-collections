@@ -1,0 +1,108 @@
+.filter{
+    padding: 24px;
+    background-color: var(--white-color);
+    box-shadow: var(--shadow);
+    border-radius: var(--border-radius-24);
+    max-width: 392px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.search{
+    display: flex;
+    align-items: center;
+    position: relative; 
+    img {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        left: 24px;
+        top: 14px;
+    }
+    input {
+       border: 1px solid rgba(232, 232, 232, 1);
+       border-radius: 68px;
+       max-width: 344px;
+       height: 48px;
+       width: 100%;
+       padding-left: 52px;
+       &::placeholder {
+        font-size: var(--font-size-16);
+        font-weight: var(--font-weight-400);
+        line-height: 130%;
+        color: rgba(163, 163, 163, 1);
+;
+        
+       }
+    }
+}
+
+.specializations{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+        ul {
+            display: flex;
+            max-width: 344px;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+    }
+
+.button {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        line-height: 130%;
+        color: var(--black-color-800);
+        border: 1px solid rgba(186, 186, 186, 1);
+        border-radius: var(--border-radius-12);
+        height: 42px;
+        padding: 6px 12px;
+        font-family: "Manrope", sans-serif;
+        background: none;
+        cursor: pointer;
+        font-size: var(--font-size-16);
+        font-weight: var(--font-weight-500);
+}
+.text {
+     font-weight: var(--font-weight-400);
+        font-size: 14px;
+        color: rgba(71, 71, 71, 1);
+}
+.access {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    ul{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+}
+
+.showAll{
+    font-family: "Manrope", sans-serif;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-size: var(--font-size-14);
+    line-height: 100%;
+    font-weight: var(--font-weight-400);
+    color: var(--purple-color);
+    text-decoration: underline;
+}
+
+.active {
+    border: 1px solid var(--purple-color);
+}
+
+
+@media (max-width: 879px) {
+   .filter {
+    display: none;
+   }
+ }
