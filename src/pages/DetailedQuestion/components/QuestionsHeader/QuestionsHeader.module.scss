@@ -34,6 +34,7 @@
 .mobileInfo{
     background: none;
     border: none;
+    display: none;
 }
 
 .titleArea{
@@ -41,7 +42,11 @@
     align-items: flex-start;
     justify-content: space-between;
 }
-
+@media (max-width: 879px) {
+    .mobileInfo{
+        display: block;
+    }
+}
  @media (max-width: 548px) {
     .section {
         flex-direction: column;
