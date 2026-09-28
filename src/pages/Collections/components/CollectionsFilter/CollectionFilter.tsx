@@ -1,11 +1,11 @@
 import styles from "./CollectionFilter.module.scss";
 import blackStar from "../../../../logos and images/StarsBlack.svg";
-import search from "../../../../logos and images/search.svg";
+import searchIcon from "../../../../logos and images/search.svg";
 import { useContext, useState } from "react";
 import { CollectionContext } from "../../../../context/CollectionsContext/CollectionContext";
 import { SPECIALIZATIONS_LIMIT } from "../../../../context/CollectionsContext/CollectionContextProvider";
 
-const access = [
+const accesses = [
   {
     id: 1,
     title: "Для участников",
@@ -19,35 +19,40 @@ const access = [
 
 const CollectionFilter = () => {
   const [showAll, setShowAll] = useState(false);
-  const [activeSpec, setIsActiveSpec] = useState<number | null>(null);
-  const [activeAccess, setIsActiveAccess] = useState<number | null>(null);
 
   const {
     specializationsData,
-    getSpecializations,
+    specializations,
+    search,
+    access,
     setSpecialization,
+    getSpecializations,
     setAccess,
     setSearch,
   } = useContext(CollectionContext);
   const data = specializationsData?.data;
   const total = specializationsData?.total;
+  const visibleSpecializations = showAll
+    ? data
+    : data?.slice(0, SPECIALIZATIONS_LIMIT);
 
   const toggleShowAll = (): void => {
-    setShowAll((prev) => !prev);
-    if (!showAll && total) {
+    if (!showAll && total && data?.length === SPECIALIZATIONS_LIMIT) {
       getSpecializations(total);
-    } else {
-      getSpecializations(SPECIALIZATIONS_LIMIT);
     }
+
+    setShowAll((prev) => !prev);
   };
 
   const handleSpecializationFilter = (id: number) => {
-    setIsActiveSpec(id);
     setSpecialization(id);
   };
   const handleAccessFilter = (id: number) => {
-    id === 0 ? setAccess(true) : setAccess(false);
-    setIsActiveAccess(id);
+    if (id === 0) {
+      setAccess(true);
+    } else {
+      setAccess(false);
+    }
   };
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,50 +63,64 @@ const CollectionFilter = () => {
   return (
     <div className={styles.filter}>
       <div className={styles.search}>
-        <img src={search} alt="search icon" />
+        <label htmlFor="collection-search">Поиск коллекций</label>
+        <img src={searchIcon} alt="search icon" />
         <input
+          id="collection-search"
           type="text"
           placeholder="Введите запрос…"
           onChange={handleSearch}
+          value={search ?? ""}
         />
       </div>
       <div className={styles.specializations}>
         <span className={styles.text}>Cпециализация</span>
-        <ul>
-          {data &&
-            data.map(({ title, id }) => (
-              <li key={id}>
-                <button
-                  className={
-                    activeSpec === id
-                      ? `${styles.button} ${styles.active}`
-                      : styles.button
-                  }
-                  onClick={() => handleSpecializationFilter(id)}
-                >
-                  {title}
-                </button>
-              </li>
-            ))}
+        <ul id="specializations-list">
+          {visibleSpecializations?.map(({ title, id }) => (
+            <li key={id}>
+              <button
+                className={
+                  specializations === id
+                    ? `${styles.button} ${styles.active}`
+                    : styles.button
+                }
+                onClick={() => handleSpecializationFilter(id)}
+              >
+                {title}
+              </button>
+            </li>
+          ))}
         </ul>
-        {showAll ? (
-          <button onClick={toggleShowAll} className={styles.showAll}>
-            <span>Скрыть</span>
-          </button>
-        ) : (
-          <button onClick={toggleShowAll} className={styles.showAll}>
-            <span>Посмотреть все</span>
-          </button>
-        )}
+        {total &&
+          total > SPECIALIZATIONS_LIMIT &&
+          (showAll ? (
+            <button
+              aria-expanded={showAll}
+              aria-controls="specializations-list"
+              onClick={toggleShowAll}
+              className={styles.showAll}
+            >
+              <span>Скрыть</span>
+            </button>
+          ) : (
+            <button
+              aria-expanded={showAll}
+              aria-controls="specializations-list"
+              onClick={toggleShowAll}
+              className={styles.showAll}
+            >
+              <span>Посмотреть все</span>
+            </button>
+          ))}
       </div>
       <div className={styles.access}>
         <span className={styles.text}>Доступ</span>
         <ul>
-          {access.map(({ id, title, image }) => (
+          {accesses.map(({ id, title, image }) => (
             <li className={styles.item} key={id}>
               <button
                 className={
-                  activeAccess === id
+                  (id === 0 ? access === true : access === false)
                     ? `${styles.button} ${styles.active}`
                     : styles.button
                 }

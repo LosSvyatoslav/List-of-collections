@@ -1,24 +1,48 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import styles from "./Questions.module.scss";
 import { QuestionContext } from "../../../../context/QuestionContext/QuestionContext";
 import Loader from "../../../../components/Loader/Loader";
 import Pagination from "../../../../components/Pagination/Pagination";
 import QuestionCard from "../QuestionCard/QuestionCard";
 
-const Questions = () => {
+interface QuestionsProps {
+  collectionId: string
+}
+
+const Questions = ({collectionId}: QuestionsProps) => {
 
   const {
     questionsData,
     page,
+    loading,
+    error,
+    getQuestionsData,
+    resetPage,
     pagesCount,
     handleCurrentPage,
     handleNextPage,
     handlePreviousPage,
   } = useContext(QuestionContext);
-  if (!questionsData) {
-    return <Loader />;
-  }
 
+ useEffect(() => {
+  resetPage();
+}, [collectionId, resetPage]);
+
+useEffect(() => {
+  getQuestionsData(collectionId, page);
+}, [collectionId, page, getQuestionsData]);
+  
+if (loading) {
+  return <Loader />;
+}
+
+if (error) {
+  return <p>{error}</p>;
+}
+
+if (!questionsData) {
+  return <Loader />;
+}
   const questions = questionsData.data;
 
   return (
@@ -37,6 +61,8 @@ const Questions = () => {
               imageSrc={imageSrc}
               shortAnswer={shortAnswer}
               complexity={complexity}
+              collectionId={collectionId}
+              page={page}
             />
           ),
         )}

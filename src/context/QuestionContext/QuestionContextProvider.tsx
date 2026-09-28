@@ -1,15 +1,12 @@
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { QuestionContext } from "./QuestionContext";
 import type { Question } from "./types";
 import type { Data } from "../CollectionsContext/types";
 import axios from "axios";
 import type { ContextProps } from "../CollectionsContext/types";
+import { questionsApi } from "./questionsApi";
 
 const QUESTIONS_LIMIT = 9;
-
-export const questionsApi = axios.create({
-  baseURL: "https://api.yeatwork.ru/questions/public-questions",
-});
 
 const QuestionProvider = ({ children }: ContextProps) => {
   const [questionsData, setQuestionsData] = useState<Data<Question> | null>(
@@ -20,7 +17,7 @@ const QuestionProvider = ({ children }: ContextProps) => {
 
   const [page, setPage] = useState(1);
 
-  const total = questionsData?.total;
+  const total = questionsData?.total ?? 0;
   const pagesCount = Math.ceil(total / QUESTIONS_LIMIT);
 
   function handleNextPage() {
@@ -39,34 +36,31 @@ const QuestionProvider = ({ children }: ContextProps) => {
     }
   }
 
-  useEffect(() => {
-    const controller = new AbortController();
-    async function getQuestionsData() {
-      setLoading(true);
-      setError(null);
-      try {
-        const response = await questionsApi.get<Data<Question>>("", {
-          params: {
-            page,
-            limit: QUESTIONS_LIMIT,
-          },
-          signal: controller.signal,
-        });
-        setQuestionsData(response.data);
-      } catch (error) {
-        if (axios.isCancel(error)) {
-          return;
-        }
-        setError("Не удалось загрузить вопросы");
-      } finally {
-        if (!controller.signal.aborted) {
-          setLoading(false);
-        }
+  function resetPage() {
+    setPage(1);
+  }
+
+  const getQuestionsData = useCallback(async (id: string, page: number) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await questionsApi.get<Data<Question>>("", {
+        params: {
+          page,
+          collection: id,
+          limit: QUESTIONS_LIMIT,
+        },
+      });
+      setQuestionsData(response.data);
+    } catch (error) {
+      if (axios.isCancel(error)) {
+        return;
       }
+      setError("Не удалось загрузить вопросы");
+    } finally {
+      setLoading(false);
     }
-    getQuestionsData();
-    return () => controller.abort();
-  }, [page]);
+  }, []);
 
   return (
     <QuestionContext.Provider
@@ -79,6 +73,8 @@ const QuestionProvider = ({ children }: ContextProps) => {
         handleNextPage,
         handleCurrentPage,
         handlePreviousPage,
+        getQuestionsData,
+        resetPage,
       }}
     >
       {children}

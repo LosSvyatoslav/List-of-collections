@@ -25,7 +25,13 @@ const QuestionsLongAnswer = ({
 
     if (!element) return;
 
-    setIsOverflowing(element.scrollHeight > 785);
+    const observer = new ResizeObserver(() => {
+      setIsOverflowing(element.scrollHeight > 785);
+    });
+
+    observer.observe(element);
+
+    return () => observer.disconnect();
   }, [answer]);
 
   const handleExpand = () => {

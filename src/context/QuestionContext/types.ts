@@ -7,8 +7,10 @@ export interface QuestionContextValue {
   handleNextPage: () => void;
   handleCurrentPage: (page: number) => void;
   handlePreviousPage: () => void;
+  getQuestionsData: (id: string, page: number) => void;
+  resetPage: () => void;
   loading: boolean;
-  error: string;
+  error: string | null;
 }
 
 export interface Question {

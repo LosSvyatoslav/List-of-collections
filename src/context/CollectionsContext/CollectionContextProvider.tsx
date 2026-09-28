@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { CollectionContext } from "./CollectionContext";
 import type { Collection, Specialization, Data } from "./types";
 import axios from "axios";
@@ -38,12 +38,12 @@ const CollectionProvider = ({ children }: ContextProps) => {
 
   const isFirstRender = useRef(true);
 
-  const total = collectionsData?.total;
+  const total = collectionsData?.total ?? 0;
   const pagesCount = Math.ceil(total / COLLECTIONS_LIMIT);
   const debouncedValue = useDebounce(search, 300);
 
   function handleNextPage() {
-    if (page !== pagesCount) {
+    if (page < pagesCount) {
       setPage((prev) => prev + 1);
     }
   }
@@ -53,18 +53,20 @@ const CollectionProvider = ({ children }: ContextProps) => {
   }
 
   function handlePreviousPage() {
-    if (page !== 1) {
+    if (page > 1) {
       setPage((prev) => prev - 1);
     }
   }
+  useEffect(() => {
+    setPage(1);
+  }, [specializations, debouncedValue, access]);
 
   useEffect(() => {
     const controller = new AbortController();
 
-    setInitialLoading(true);
-    setError(null);
-
     async function getInitialData() {
+      setInitialLoading(true);
+      setError(null);
       try {
         const [collectionsResponse, specializationsResponse] =
           await Promise.all([
@@ -116,29 +118,21 @@ const CollectionProvider = ({ children }: ContextProps) => {
 
     async function getInitialData() {
       try {
-        const [collectionsResponse, specializationsResponse] =
-          await Promise.all([
-            collectionsApi.get<Data<Collection>>("", {
-              params: {
-                limit: COLLECTIONS_LIMIT,
-                page,
-                specializations,
-                titleOrDescriptionSearch: debouncedValue,
-                isFree: access,
-              },
-              signal: controller.signal,
-            }),
-
-            specializationsApi.get<Data<Specialization>>("", {
-              params: {
-                limit: SPECIALIZATIONS_LIMIT,
-              },
-              signal: controller.signal,
-            }),
-          ]);
+        const collectionsResponse = await collectionsApi.get<Data<Collection>>(
+          "",
+          {
+            params: {
+              limit: COLLECTIONS_LIMIT,
+              page,
+              specializations,
+              titleOrDescriptionSearch: debouncedValue,
+              isFree: access,
+            },
+            signal: controller.signal,
+          },
+        );
 
         setCollectionsData(collectionsResponse.data);
-        setSpecializationsData(specializationsResponse.data);
       } catch (error) {
         if (axios.isCancel(error)) {
           return;
@@ -157,18 +151,18 @@ const CollectionProvider = ({ children }: ContextProps) => {
     return () => controller.abort();
   }, [page, specializations, debouncedValue, access]);
 
-  async function getCollectionData(id: string) {
+  const getCollectionData = useCallback(async (id: string) => {
     setCollectionLoading(true);
     setCollectionError(null);
     try {
       const response = await collectionByIdApi.get<Collection>(`/${id}/public`);
       setCollectionData(response.data);
     } catch (error) {
-      setCollectionError("Не удалось загрузить коллекцию");
+      setCollectionError(error);
     } finally {
       setCollectionLoading(false);
     }
-  }
+  }, []);
 
   async function getSpecializations(limit: number) {
     try {
@@ -197,6 +191,9 @@ const CollectionProvider = ({ children }: ContextProps) => {
         error,
         collectionLoading,
         collectionError,
+        specializations,
+        search,
+        access,
         getCollectionData,
         getSpecializations,
         handleNextPage,

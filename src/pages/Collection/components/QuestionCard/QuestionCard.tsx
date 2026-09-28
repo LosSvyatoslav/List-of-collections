@@ -6,6 +6,17 @@ import dot from "../../../../logos and images/dot.svg";
 import arrow from "../../../../logos and images/Chevrone_Down.svg";
 import arrowRight from "../../../../logos and images/Arrow Right.svg";
 
+interface QuestionCardProps {
+  title: string;
+  id: number;
+  rate: number;
+  complexity: number;
+  imageSrc: string;
+  shortAnswer: string;
+  collectionId: string;
+  page: number;
+}
+
 const QuestionCard = ({
   title,
   id,
@@ -13,7 +24,9 @@ const QuestionCard = ({
   complexity,
   imageSrc,
   shortAnswer,
-}) => {
+  collectionId,
+  page,
+}: QuestionCardProps) => {
   const [questionId, setQuestionId] = useState<number | null>(null);
 
   const showAnswer = (id: number) => {
@@ -21,7 +34,11 @@ const QuestionCard = ({
   };
   return (
     <li className={styles.item}>
-      <button onClick={() => showAnswer(id)}>
+      <button
+        onClick={() => showAnswer(id)}
+        aria-expanded={questionId === id}
+        aria-controls={`answer-${id}`}
+      >
         <div className={styles.question}>
           <div className={styles.questionTitle}>
             <img src={dot} alt="items mark" className={styles.mark} />
@@ -39,6 +56,7 @@ const QuestionCard = ({
         </div>
       </button>
       <div
+        id={`answer-${id}`}
         className={`${styles.answer} ${questionId === id ? styles.answerOpen : ""}`}
       >
         <div className={styles.answerContent}>
@@ -65,7 +83,10 @@ const QuestionCard = ({
               __html: DOMPurify.sanitize(shortAnswer),
             }}
           />
-          <Link to={`/public-questions/${id}`} className={styles.showMore}>
+          <Link
+            to={`/public-questions/${id}?collection=${collectionId}&page=${page}`}
+            className={styles.showMore}
+          >
             <span>Подробнее</span>
             <img src={arrowRight} alt="arrow right" />
           </Link>

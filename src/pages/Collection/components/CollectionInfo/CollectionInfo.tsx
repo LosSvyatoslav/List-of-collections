@@ -5,7 +5,7 @@ import tgLogo from "../../../../logos and images/Telegram purple.svg";
 import type { Props } from "../../../../context/CollectionsContext/types";
 
 const CollectionInfo = ({ collectionData }: Props) => {
-  const { createdBy, isFree, keywords, specializations, tasksCount, title } =
+  const { createdBy, isFree, keywords, specializations, questionsCount, company } =
     collectionData;
 
   return (
@@ -32,14 +32,14 @@ const CollectionInfo = ({ collectionData }: Props) => {
       <div className={styles.details}>
         <span className={styles.title}>Компания</span>
         <div className={styles.company}>
-          <img src={sberLogo} alt="company logo" className={styles.logo} />
-          <span>{title}</span>
+          <img src={company?.imageSrc || sberLogo} alt={company?.title} className={styles.logo} />
+          <span>{company?.title}</span>
         </div>
       </div>
 
       <div className={styles.details}>
         <span className={styles.title}>Количество вопросов</span>
-        <span className={styles.tasksCount}>{tasksCount}</span>
+        <span className={styles.tasksCount}>{questionsCount}</span>
       </div>
 
       <div className={styles.details}>

@@ -16,7 +16,10 @@
 .answerText {
    line-height: 130%; 
    color: var(--black-color-800);
-   
+     pre {
+      max-width: 100%;
+      overflow-x: auto;
+   }
 }
 
  @media (max-width: 879px) {

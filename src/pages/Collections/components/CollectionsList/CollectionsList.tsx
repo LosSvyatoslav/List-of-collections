@@ -19,6 +19,7 @@ const CollectionsList = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const collections = collectionsData?.data;
+  const hasCollections = collections && collections.length > 0;
 
   const showFilter = () => {
     setIsOpen((prev) => !prev);
@@ -39,35 +40,46 @@ const CollectionsList = () => {
               <CollectionsMobileFilter showFilter={showFilter} />
             </div>
           )}
-          <ul className={styles.cardList}>
-            {collections.map(
-              ({
-                id,
-                isFree,
-                keywords,
-                specializations,
-                tasksCount,
-                description,
-              }) => (
-                <CollectionCard
-                  key={id}
-                  id={id}
-                  isFree={isFree}
-                  keywords={keywords}
-                  specializations={specializations}
-                  tasksCount={tasksCount}
-                  description={description}
-                />
-              ),
-            )}
-          </ul>
-          <Pagination
-            page={page}
-            pagesCount={pagesCount}
-            handleCurrentPage={handleCurrentPage}
-            handleNextPage={handleNextPage}
-            handlePreviousPage={handlePreviousPage}
-          />
+          {hasCollections ? (
+            <>
+              <ul className={styles.cardList}>
+                {collections.map(
+                  ({
+                    id,
+                    isFree,
+                    keywords,
+                    specializations,
+                    questionsCount,
+                    description,
+                    company,
+                    title
+                  }) => (
+                    <CollectionCard
+                      key={id}
+                      id={id}
+                      isFree={isFree}
+                      keywords={keywords}
+                      specializations={specializations}
+                      questionsCount={questionsCount}
+                      description={description}
+                      company={company}
+                      title={title}
+                    />
+                  ),
+                )}
+              </ul>
+
+              <Pagination
+                page={page}
+                pagesCount={pagesCount}
+                handleCurrentPage={handleCurrentPage}
+                handleNextPage={handleNextPage}
+                handlePreviousPage={handlePreviousPage}
+              />
+            </>
+          ) : (
+            <p>Коллекции не найдены</p>
+          )}
         </div>
       )}
     </>

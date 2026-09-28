@@ -10,13 +10,15 @@ const CollectionCard = ({
   isFree,
   keywords,
   specializations,
-  tasksCount,
+  questionsCount,
   description,
+  company,
+  title,
 }: Collection) => {
   return (
     <li>
       <Link to={`/collections/${id}`} className={styles.card}>
-        <img src={sberLogo} alt={description} className={styles.cardLogo} />
+        <img src={company?.imageSrc || sberLogo} alt={description} className={styles.cardLogo} />
         <div className={styles.info}>
           <ul className={styles.keyWords}>
             {keywords.slice(0, 3).map((keyword) => (
@@ -25,15 +27,15 @@ const CollectionCard = ({
               </li>
             ))}
           </ul>
-          <h3 className={styles.description}>{description}</h3>
+          <h3 className={styles.description}>{title}</h3>
           <div className={styles.details}>
             <div>
-              {isFree && <img src={purpleStar} alt="purple stars" />}
+              {!isFree && <img src={purpleStar} alt="purple stars" />}
               <span>{isFree ? "Для всех" : "Для участников"}</span>
             </div>
             <div>
               <img src={question} alt="questions icon" />
-              <span>{tasksCount} вопросов</span>
+              <span>{questionsCount} вопросов</span>
             </div>
           </div>
           <ul className={styles.specializations}>

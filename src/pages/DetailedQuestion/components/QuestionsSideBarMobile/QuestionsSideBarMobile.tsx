@@ -7,13 +7,8 @@ import { useContext } from "react";
 const QuestionsSideBarMobile = ({ handleCloseInfo }) => {
   const context = useContext(DetailedQuestionContext);
   const questionData = context?.questionData;
-  const {
-    complexity,
-    rate,
-    questionSkills,
-    keywords,
-    createdBy: { username },
-  } = questionData;
+  const { complexity, rate, questionSkills, keywords, createdBy } =
+    questionData;
 
   return (
     <div className={styles.info}>
@@ -58,7 +53,9 @@ const QuestionsSideBarMobile = ({ handleCloseInfo }) => {
         </div>
         <div className={styles.author}>
           <span className={styles.title}>Автор: </span>
-          <span className={styles.marked}>{username || "неизвестно"}</span>
+          <span className={styles.marked}>
+            {createdBy?.username || "неизвестно"}
+          </span>
         </div>
       </div>
     </div>

@@ -21,7 +21,8 @@ const Collection = () => {
     if (collectionId) {
       getCollectionData(collectionId);
     }
-  }, [collectionId]);
+  }, [collectionId, getCollectionData]);
+
 
   if (collectionLoading) {
     return <Loader />;
@@ -40,7 +41,7 @@ const Collection = () => {
         <div className={styles.collection}>
           <div className={styles.leftSide}>
             <CollectionHeader title={title} description={description} />
-            <Questions />
+            <Questions collectionId={collectionId}/>
           </div>
           <div className={styles.rightSide}>
             <CollectionInfo collectionData={collectionData} />
