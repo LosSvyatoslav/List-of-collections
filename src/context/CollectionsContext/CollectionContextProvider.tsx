@@ -57,9 +57,6 @@ const CollectionProvider = ({ children }: ContextProps) => {
       setPage((prev) => prev - 1);
     }
   }
-  useEffect(() => {
-    setPage(1);
-  }, [specializations, debouncedValue, access]);
 
   useEffect(() => {
     const controller = new AbortController();

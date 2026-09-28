@@ -26,7 +26,7 @@ const DetailedQuestion = () => {
     if (questionId) {
       getQuestionData(questionId);
     }
-  }, [questionId]);
+  }, [questionId, getQuestionData]);
 
   if (error) {
     return <p>Не удалось загрузить коллекцию</p>;
@@ -62,7 +62,7 @@ const DetailedQuestion = () => {
             <QuestionsHeader title={title} description={description} />
             <DetailedQuestionNavigation />
             <QuestionsShortAnswer answer={shortAnswer} />
-            <QuestionsLongAnswer answer={longAnswer} questionId={questionId} />
+            <QuestionsLongAnswer key={questionId} answer={longAnswer} questionId={questionId} />
           </div>
 
           <QuestionsSideBar

@@ -10,15 +10,11 @@ interface QuestionsLongAnswerProps {
 
 const QuestionsLongAnswer = ({
   answer,
-  questionId,
 }: QuestionsLongAnswerProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isOverflowing, setIsOverflowing] = useState(false);
   const answerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    setIsExpanded(false);
-  }, [questionId]);
 
   useEffect(() => {
     const element = answerRef.current;
